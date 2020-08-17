@@ -3,6 +3,21 @@ const projects = require("./data/helpers/projectModel");
 const actions = require("./data/helpers/actionModel");
 const projectRouter = express.Router();
 
+projectRouter.get("/projects", (req, res, next) => {
+  projects
+    .get()
+    .then(project => {
+      if (project) {
+        res.status(200).json(project);
+      } else {
+        res.status(404).json({
+          message: "No Projects found"
+        });
+      }
+    })
+    .catch(next);
+});
+
 //Get Project by ID
 
 projectRouter.get("/projects/:id", (req, res, next) => {
