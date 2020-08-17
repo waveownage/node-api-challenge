@@ -52,7 +52,7 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] What can the API return to help clients know if a request was successful?
 
-    a status message of 200.
+    a status message of 200!
 
 - [ ] How can we partition our application into sub-applications?
 
