@@ -71,4 +71,25 @@ projectRouter.post("/projects", (req, res, next) => {
     .catch(next);
 });
 
+// Add new Action
+
+projectRouter.post("/projects/:id/actions", (req, res, next) => {
+  if (!req.params.id) {
+    res.status(404).json({
+      message: "The project with the specified ID does not exist."
+    });
+  } else if (!req.body.description || !req.body.notes) {
+    res.status(400).json({
+      errorMessage: "Please provide description and notes for the action."
+    });
+  } else {
+    actions
+      .insert({ ...req.body, project_id: req.params.id })
+      .then(action => {
+        res.status(201).json(action);
+      })
+      .catch(next);
+  }
+});
+
 module.exports = projectRouter;
