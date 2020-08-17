@@ -92,4 +92,27 @@ projectRouter.post("/projects/:id/actions", (req, res, next) => {
   }
 });
 
+// Update Project w/ ID
+
+projectRouter.put("/projects/:id", (req, res, next) => {
+  if (!req.body.name || !req.body.description) {
+    return res.status(400).json({
+      errorMessage: "Please provide name and description for the project."
+    });
+  }
+
+  projects
+    .update(req.params.id, req.body)
+    .then(user => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({
+          message: "The project with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(next);
+});
+
 module.exports = projectRouter;
