@@ -37,4 +37,21 @@ projectRouter.get("/projects/:id/actions/:actionsID", (req, res, next) => {
     .catch(next);
 });
 
+//Get all project actions
+
+projectRouter.get("/projects/:id/actions", (req, res, next) => {
+  actions
+    .get()
+    .then(action => {
+      if (action) {
+        res.status(200).json(action);
+      } else {
+        res.status(404).json({
+          message: "The project with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(next);
+});
+
 module.exports = projectRouter;
