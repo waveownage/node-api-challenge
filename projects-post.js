@@ -136,4 +136,42 @@ projectRouter.put("/projects/:id/actions/:actionsID", (req, res, next) => {
   }
 });
 
+//Delete Project by ID
+
+projectRouter.delete("/projects/:id", (req, res, next) => {
+  projects
+    .remove(req.params.id)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: "The project has been nuked"
+        });
+      } else {
+        res.status(404).json({
+          message: "The project with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(next);
+});
+
+//Delete action by ID
+
+projectRouter.delete("/projects/:id/actions/:actionsID", (req, res, next) => {
+  actions
+    .remove(req.params.actionsID)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: "The action has been nuked"
+        });
+      } else {
+        res.status(404).json({
+          message: "The action with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(next);
+});
+
 module.exports = projectRouter;
