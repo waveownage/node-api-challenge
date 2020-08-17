@@ -54,4 +54,21 @@ projectRouter.get("/projects/:id/actions", (req, res, next) => {
     .catch(next);
 });
 
+//Add New Project
+
+projectRouter.post("/projects", (req, res, next) => {
+  if (!req.body.name || !req.body.description) {
+    return res.status(400).json({
+      errorMessage: "Please provide name and description for the project."
+    });
+  }
+
+  projects
+    .insert(req.body)
+    .then(project => {
+      res.status(201).json(project);
+    })
+    .catch(next);
+});
+
 module.exports = projectRouter;
