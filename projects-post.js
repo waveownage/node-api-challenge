@@ -115,4 +115,25 @@ projectRouter.put("/projects/:id", (req, res, next) => {
     .catch(next);
 });
 
+//Update Action by ID
+
+projectRouter.put("/projects/:id/actions/:actionsID", (req, res, next) => {
+  if (!req.params.actionsID) {
+    res.status(404).json({
+      message: "The action with the specified ID does not exist."
+    });
+  } else if (!req.body.description || !req.body.notes) {
+    res.status(400).json({
+      errorMessage: "Please provide description and notes for the action."
+    });
+  } else {
+    actions
+      .update(req.params.actionsID, req.body)
+      .then(action => {
+        res.status(201).json(action);
+      })
+      .catch(next);
+  }
+});
+
 module.exports = projectRouter;
